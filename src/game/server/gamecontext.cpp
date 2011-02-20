@@ -13,6 +13,7 @@
 #include "gamemodes/tdm.h"
 #include "gamemodes/ctf.h"
 #include "gamemodes/mod.h"
+#include "gamemodes/plugin.h"
 
 enum
 {
@@ -1057,7 +1058,8 @@ void CGameContext::OnInit(/*class IKernel *pKernel*/)
 	else if(str_comp(g_Config.m_SvGametype, "tdm") == 0)
 		m_pController = new CGameControllerTDM(this);
 	else
-		m_pController = new CGameControllerDM(this);
+		// FIXME: if no plugin found fallback to DM
+		m_pController = new CGameControllerPLUGIN(this, g_Config.m_SvGametype);
 
 	Server()->SetBrowseInfo(m_pController->m_pGameType, -1);
 
